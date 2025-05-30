@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Card, Text, List, Divider } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import GradientBackground from '../components/GradientBackground';
 import ModalSelector from '../components/ModalSelector';
+import ConfirmationModal from '../components/ConfirmationModal';
 import { colors } from '../constants/colors';
 import { settings } from '../constants/dummyData';
 import { RootStackParamList } from '../navigation/AppNavigator';
@@ -28,26 +29,20 @@ const SettingsScreen = ({ onLogout }: SettingsScreenProps) => {
   const [waitTime, setWaitTime] = useState('30');
   const [lockTime, setLockTime] = useState('45');
 
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+
   const handleLogout = () => {
-    Alert.alert(
-      'Logout',
-      'Are you sure you want to logout?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        { 
-          text: 'Logout', 
-          style: 'destructive',
-          onPress: () => {
-            if (onLogout) {
-              console.log('Logout function called');
-              onLogout();
-            } else {
-              console.log('No logout function provided');
-            }
-          }
-        }
-      ]
-    );
+    setShowLogoutModal(true);
+  };
+
+  const confirmLogout = () => {
+    setShowLogoutModal(false);
+    if (onLogout) {
+      console.log('Logout function called');
+      onLogout();
+    } else {
+      console.log('No logout function provided');
+    }
   };
 
   const speedOptions = [
@@ -221,6 +216,18 @@ const SettingsScreen = ({ onLogout }: SettingsScreenProps) => {
           onSelect={setScanDelay}
           onDismiss={() => setShowScanDelayModal(false)}
           onSave={() => setShowScanDelayModal(false)}
+        />
+
+        <ConfirmationModal
+          visible={showLogoutModal}
+          title="Logout"
+          message="Are you sure you want to logout?"
+          confirmText="Logout"
+          cancelText="Cancel"
+          onConfirm={confirmLogout}
+          onCancel={() => setShowLogoutModal(false)}
+          type="warning"
+          icon="logout"
         />
       </ScrollView>
     </GradientBackground>
