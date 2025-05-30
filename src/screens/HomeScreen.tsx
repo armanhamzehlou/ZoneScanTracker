@@ -94,8 +94,8 @@ const HomeScreen = () => {
       <EmergencyIndicator isActive={emergencyActive} />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
-          <Text style={styles.title}>VirBrix Control</Text>
-          <Text style={styles.subtitle}>Robot Management System</Text>
+          <Text style={styles.title}>GlobalDWS VirBrix Control</Text>
+          <Text style={styles.subtitle}>Environmental Scanning & Security</Text>
         </View>
 
         <StatusCard status={robotStatus} />

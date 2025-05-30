@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Card, Text, ProgressBar } from 'react-native-paper';
+import { LinearGradient } from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { colors } from '../constants/colors';
 import { RobotStatus } from '../types';
@@ -12,7 +13,13 @@ interface StatusCardProps {
 const StatusCard: React.FC<StatusCardProps> = ({ status }) => {
   return (
     <Card style={styles.card}>
-      <Card.Content style={styles.content}>
+      <LinearGradient
+        colors={[colors.surface, colors.surfaceDark]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={styles.cardGradient}
+      >
+        <Card.Content style={styles.content}>
         <View style={styles.header}>
           <Text style={styles.title}>Robot Status</Text>
           <Icon
@@ -52,16 +59,22 @@ const StatusCard: React.FC<StatusCardProps> = ({ status }) => {
             <Text style={styles.infoValue}>{status.speed}</Text>
           </View>
         </View>
-      </Card.Content>
+        </Card.Content>
+      </LinearGradient>
     </Card>
   );
 };
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: colors.cardBackground,
+    backgroundColor: 'transparent',
     marginBottom: 16,
     elevation: 4,
+    overflow: 'hidden',
+    borderRadius: 12,
+  },
+  cardGradient: {
+    borderRadius: 12,
   },
   content: {
     padding: 16,

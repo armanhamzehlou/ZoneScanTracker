@@ -65,11 +65,9 @@ const EmergencyIndicator: React.FC<EmergencyIndicatorProps> = ({ isActive }) => 
       ]}
     >
       <View style={styles.content}>
-        <Icon name="alert-octagon" size={24} color={colors.text} />
-        <Text style={styles.text}>EMERGENCY STOP ACTIVE</Text>
-        <Icon name="stop-circle" size={24} color={colors.text} />
+        <Icon name="stop-circle" size={20} color={colors.text} />
+        <Text style={styles.text}>EMERGENCY STOP</Text>
       </View>
-      <Text style={styles.subtext}>Robot operations are disabled</Text>
     </Animated.View>
   );
 };
@@ -81,7 +79,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     backgroundColor: colors.emergencyActive,
-    paddingVertical: 12,
+    paddingVertical: 8,
     paddingHorizontal: 20,
     zIndex: 1000,
     elevation: 10,
@@ -90,20 +88,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 4,
   },
   text: {
-    fontSize: 16,
-    fontWeight: '800',
+    fontSize: 14,
+    fontWeight: '700',
     color: colors.text,
-    marginHorizontal: 12,
-    letterSpacing: 1,
-  },
-  subtext: {
-    fontSize: 12,
-    color: colors.text,
-    textAlign: 'center',
-    opacity: 0.9,
+    marginLeft: 8,
+    letterSpacing: 0.5,
   },
 });
 
