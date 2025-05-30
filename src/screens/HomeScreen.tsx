@@ -1,11 +1,14 @@
-import React from 'react';
-import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, ScrollView, TouchableOpacity, Animated } from 'react-native';
 import { Card, Text, Button, FAB } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import GradientBackground from '../components/GradientBackground';
 import StatusCard from '../components/StatusCard';
+import ConfirmationModal from '../components/ConfirmationModal';
+import NavigationStatusModal from '../components/NavigationStatusModal';
+import EmergencyIndicator from '../components/EmergencyIndicator';
 import { colors } from '../constants/colors';
 import { robotStatus } from '../constants/dummyData';
 import { RootStackParamList } from '../navigation/AppNavigator';
@@ -14,6 +17,44 @@ type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'H
 
 const HomeScreen = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
+  const [showSendHomeDialog, setShowSendHomeDialog] = useState(false);
+  const [showEmergencyDialog, setShowEmergencyDialog] = useState(false);
+  const [showNavigationDialog, setShowNavigationDialog] = useState(false);
+  const [emergencyActive, setEmergencyActive] = useState(false);
+  const [tileAnimations] = useState([
+    new Animated.Value(0),
+    new Animated.Value(0),
+    new Animated.Value(0),
+    new Animated.Value(0),
+  ]);
+
+  useEffect(() => {
+    // Staggered tile animations on mount
+    const animations = tileAnimations.map((anim, index) => 
+      Animated.timing(anim, {
+        toValue: 1,
+        duration: 600,
+        delay: index * 100,
+        useNativeDriver: true,
+      })
+    );
+
+    Animated.stagger(100, animations).start();
+  }, []);
+
+  const handleSendHomeConfirm = () => {
+    setShowSendHomeDialog(false);
+    setShowNavigationDialog(true);
+  };
+
+  const handleEmergencyConfirm = () => {
+    setShowEmergencyDialog(false);
+    setEmergencyActive(true);
+  };
+
+  const handleStopNavigation = () => {
+    setShowNavigationDialog(false);
+  };
 
   const navigationTiles = [
     {
@@ -40,6 +81,7 @@ const HomeScreen = () => {
 
   return (
     <GradientBackground>
+      <EmergencyIndicator isActive={emergencyActive} />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <Text style={styles.title}>VirBrix Control</Text>
@@ -54,40 +96,105 @@ const HomeScreen = () => {
             icon="home"
             buttonColor={colors.accent}
             textColor={colors.primary}
-            style={styles.controlButton}
-            onPress={() => {}}
+            style={[
+              styles.controlButton,
+              emergencyActive && styles.disabledButton
+            ]}
+            onPress={() => setShowSendHomeDialog(true)}
+            disabled={emergencyActive}
           >
             Send Home
           </Button>
           <Button
             mode="contained"
             icon="stop"
-            buttonColor={colors.error}
+            buttonColor={emergencyActive ? colors.emergencyActive : colors.error}
             textColor={colors.text}
             style={styles.controlButton}
-            onPress={() => {}}
+            onPress={() => emergencyActive ? setEmergencyActive(false) : setShowEmergencyDialog(true)}
           >
-            Emergency Stop
+            {emergencyActive ? 'Reset Emergency' : 'Emergency Stop'}
           </Button>
         </View>
 
         <View style={styles.tilesContainer}>
-          {navigationTiles.map((tile, index) => (
-            <TouchableOpacity
-              key={index}
-              style={styles.tile}
-              onPress={tile.onPress}
-            >
-              <Card style={styles.tileCard}>
-                <Card.Content style={styles.tileContent}>
-                  <Icon name={tile.icon} size={32} color={colors.accent} />
-                  <Text style={styles.tileTitle}>{tile.title}</Text>
-                </Card.Content>
-              </Card>
-            </TouchableOpacity>
-          ))}
+          {navigationTiles.map((tile, index) => {
+            const translateY = tileAnimations[index].interpolate({
+              inputRange: [0, 1],
+              outputRange: [50, 0],
+            });
+
+            const opacity = tileAnimations[index];
+
+            return (
+              <Animated.View
+                key={index}
+                style={[
+                  styles.tile,
+                  {
+                    opacity,
+                    transform: [{ translateY }],
+                  },
+                ]}
+              >
+                <TouchableOpacity
+                  onPress={emergencyActive ? undefined : tile.onPress}
+                  disabled={emergencyActive}
+                >
+                  <Card style={[
+                    styles.tileCard,
+                    emergencyActive && styles.disabledTile
+                  ]}>
+                    <Card.Content style={styles.tileContent}>
+                      <Icon 
+                        name={tile.icon} 
+                        size={32} 
+                        color={emergencyActive ? colors.disabled : colors.accent} 
+                      />
+                      <Text style={[
+                        styles.tileTitle,
+                        emergencyActive && styles.disabledText
+                      ]}>
+                        {tile.title}
+                      </Text>
+                    </Card.Content>
+                  </Card>
+                </TouchableOpacity>
+              </Animated.View>
+            );
+          })}
         </View>
       </ScrollView>
+
+      <ConfirmationDialog
+        visible={showSendHomeDialog}
+        title="Send Robot Home"
+        message="Are you sure you want to send the robot back to the charging station?"
+        icon="home"
+        iconColor={colors.accent}
+        confirmText="Yes"
+        cancelText="No"
+        onConfirm={handleSendHomeConfirm}
+        onCancel={() => setShowSendHomeDialog(false)}
+      />
+
+      <ConfirmationDialog
+        visible={showEmergencyDialog}
+        title="Emergency Stop"
+        message="This will immediately stop all robot operations. The robot will be unable to perform any tasks until reset."
+        icon="alert-octagon"
+        iconColor={colors.error}
+        confirmText="Yes"
+        cancelText="No"
+        onConfirm={handleEmergencyConfirm}
+        onCancel={() => setShowEmergencyDialog(false)}
+        danger={true}
+      />
+
+      <NavigationDialog
+        visible={showNavigationDialog}
+        onStop={handleStopNavigation}
+      />
     </GradientBackground>
   );
 };
