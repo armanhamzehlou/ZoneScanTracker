@@ -1,0 +1,186 @@
+🔧 Project Overview
+App Name: VirBrix Control UI (Modern Mock Version)
+Framework: React Native (target: Android only)
+Focus: UI Mock Only — No backend logic yet
+Goal: Replace legacy robotic control UI with modern, fluid, touch-friendly mock screens that simulate the user journey
+
+🧭 General Guidelines
+Do NOT copy the old design. Use it only as a wireframe reference.
+
+Use a clean, modern layout with intuitive UX and subtle animations.
+
+No need to connect to backend yet. Just simulate flows with mock data and state.
+
+Use React Navigation for screen transitions (prefer createNativeStackNavigator).
+
+For styling, use:
+
+react-native-paper, react-native-elements, or tailwind-react-native-classnames
+
+Smooth transitions, elevation/shadow, rounded corners, spacing
+
+Keep all screen files modular (1 component per screen).
+
+Use TypeScript if possible for better structure.
+
+🧱 Core Screens to Build
+Use the following mock screen descriptions. These represent the intended experience and purpose of each section:
+
+1. Home Dashboard
+Purpose: Robot's current status + navigation to all modules
+
+Show:
+
+Robot Status (Battery, Zone, Task, Schedule)
+
+Buttons: Send Home, Emergency Stop
+
+4 main tiles: Schedule, Zones, Reports, Settings
+
+2. Schedule Hub
+Shows 3 tiles:
+
+Schedule Overview
+
+Schedule Details
+
+View Draft
+
+Each tile routes to a dummy screen
+
+3. Report View
+Shows:
+
+Date picker (start to end)
+
+Time grouping dropdown (Day, Week, Month)
+
+4. Settings
+Split into 3 categories:
+
+Robot Settings
+
+Speed (opens modal: slow/medium/fast)
+
+Server IP (opens form)
+
+Scanning Delay (opens modal, numeric)
+
+Pre-schedule wait time (opens modal)
+
+Screen lock time (opens modal: 30, 45, 60 min)
+
+Navigation Settings
+
+Robot Map (view + save + refresh)
+
+Virtual Walls (placeholder)
+
+View Saved Maps (list of named maps)
+
+Navigation IP (form)
+
+Network Settings (can be empty)
+
+Logout button at the bottom
+
+5. Zone List
+Grid layout of zone cards
+
+Each card clickable → opens Zone Item screen
+
+FAB + to add new zone
+
+6. Zone Item Screen
+Tabbed UI with 3 tabs:
+
+Zone Info (Edit name + desc, buttons: delete/save)
+
+List of Points (grid layout of registered points, FAB to add)
+
+Point Register (directional icon + point name/desc + Save button)
+
+7. Add Zone
+Two text inputs: Zone Name (required), Description (optional)
+
+Save button
+
+8. Register Point
+Embedded in zone tab
+
+Inputs: Point Name, Point Description
+
+Directional control icon (static)
+
+Button: Save Point
+
+9. Saved Maps
+List of map names
+
+Only one can be active
+
+Tap to simulate selection
+
+10. Robot Map
+Image preview
+
+Buttons: Clear Map, Save Map
+
+Refresh icon top-right
+
+11. Server IP Address / Navigation IP
+Simple input screen with IP field
+
+Button: Connect / Save
+
+12. Screen Lock Timeout / Robot Speed / Scanning Delay
+Modal with:
+
+Radio buttons or numeric input
+
+Close / Save buttons
+
+🗂️ Folder Structure Suggestion
+bash
+Copy
+Edit
+/src
+  /screens
+    HomeScreen.tsx
+    ScheduleScreen.tsx
+    ReportScreen.tsx
+    SettingsScreen.tsx
+    ZoneListScreen.tsx
+    ZoneItemScreen.tsx
+    AddZoneScreen.tsx
+    MapViewerScreen.tsx
+    IPAddressScreen.tsx
+  /components
+    StatusCard.tsx
+    ZoneCard.tsx
+    ModalSelector.tsx
+    InputField.tsx
+  /navigation
+    AppNavigator.tsx
+  /constants
+    colors.ts
+    dummyData.ts
+/App.tsx
+✅ Minimum Requirements
+Navigation should be fully working
+
+Dummy data and simulated state for point/zones/maps
+
+Reusable modal components for input & options
+
+Responsive layout (tablet-friendly)
+
+Clearly organized code
+
+📦 Optional (if time permits)
+Add simple animations using react-native-reanimated
+
+Make FAB float with slight bounce
+
+Show simulated success toasts on actions (e.g., "Point Saved")
+
