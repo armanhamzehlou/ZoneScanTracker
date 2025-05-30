@@ -12,8 +12,8 @@ interface LoginScreenProps {
 const { width } = Dimensions.get('window');
 
 const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('arman.hamzehlou@globaldws.com');
+  const [password, setPassword] = useState('arman123');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
