@@ -39,7 +39,10 @@ const SettingsScreen = ({ onLogout }: SettingsScreenProps) => {
           style: 'destructive',
           onPress: () => {
             if (onLogout) {
+              console.log('Logout function called');
               onLogout();
+            } else {
+              console.log('No logout function provided');
             }
           }
         }

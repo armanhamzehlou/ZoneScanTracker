@@ -27,6 +27,11 @@ export default function App() {
     setIsLoggedIn(true);
   };
 
+  const handleLogout = () => {
+    console.log('Logout called in App.tsx');
+    setIsLoggedIn(false);
+  };
+
   return (
     <PaperProvider theme={theme}>
       <StatusBar
@@ -36,7 +41,7 @@ export default function App() {
       />
       {isLoggedIn ? (
         <NavigationContainer>
-          <AppNavigator onLogout={() => setIsLoggedIn(false)} />
+          <AppNavigator onLogout={handleLogout} />
         </NavigationContainer>
       ) : (
         <LoginScreen onLogin={handleLogin} />
