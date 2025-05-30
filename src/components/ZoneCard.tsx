@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Card, Text } from 'react-native-paper';
+import { LinearGradient } from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { colors } from '../constants/colors';
 import { Zone } from '../types';
@@ -14,7 +15,13 @@ const ZoneCard: React.FC<ZoneCardProps> = ({ zone, onPress }) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
       <Card style={styles.card}>
-        <Card.Content style={styles.content}>
+        <LinearGradient
+          colors={[colors.surface, colors.surfaceDark]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={styles.cardGradient}
+        >
+          <Card.Content style={styles.content}>
           <View style={styles.header}>
             <Icon name="map-marker" size={24} color={colors.accent} />
             <Text style={styles.pointCount}>{zone.points.length}</Text>
@@ -27,7 +34,8 @@ const ZoneCard: React.FC<ZoneCardProps> = ({ zone, onPress }) => {
               {zone.description}
             </Text>
           )}
-        </Card.Content>
+          </Card.Content>
+        </LinearGradient>
       </Card>
     </TouchableOpacity>
   );
@@ -39,10 +47,14 @@ const styles = StyleSheet.create({
     margin: 8,
   },
   card: {
-    backgroundColor: colors.cardBackground,
+    backgroundColor: 'transparent',
     elevation: 4,
     borderRadius: 12,
     minHeight: 120,
+    overflow: 'hidden',
+  },
+  cardGradient: {
+    borderRadius: 12,
   },
   content: {
     padding: 16,

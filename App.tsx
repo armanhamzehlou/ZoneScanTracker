@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import AppNavigator from './src/navigation/AppNavigator';
+import LoginScreen from './src/screens/LoginScreen';
 import { colors } from './src/constants/colors';
 
 const theme = {
@@ -20,16 +21,26 @@ const theme = {
 };
 
 export default function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+
   return (
     <PaperProvider theme={theme}>
-      <NavigationContainer>
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor={colors.primary}
-          translucent={false}
-        />
-        <AppNavigator />
-      </NavigationContainer>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor={colors.primary}
+        translucent={false}
+      />
+      {isLoggedIn ? (
+        <NavigationContainer>
+          <AppNavigator />
+        </NavigationContainer>
+      ) : (
+        <LoginScreen onLogin={handleLogin} />
+      )}
     </PaperProvider>
   );
 }
