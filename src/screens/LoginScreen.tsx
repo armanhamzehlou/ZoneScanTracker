@@ -118,6 +118,9 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
                       outline: colors.textSecondary,
                       background: colors.surfaceDark,
                       text: colors.text,
+                      onSurface: colors.text,
+                      onSurfaceVariant: colors.text,
+                      placeholder: colors.textSecondary,
                     },
                   }}
                 />
@@ -144,6 +147,9 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
                       outline: colors.textSecondary,
                       background: colors.surfaceDark,
                       text: colors.text,
+                      onSurface: colors.text,
+                      onSurfaceVariant: colors.text,
+                      placeholder: colors.textSecondary,
                     },
                   }}
                 />

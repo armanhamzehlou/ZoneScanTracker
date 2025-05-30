@@ -29,7 +29,11 @@ export type RootStackParamList = {
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-const AppNavigator = () => {
+interface AppNavigatorProps {
+  onLogout?: () => void;
+}
+
+const AppNavigator = ({ onLogout }: AppNavigatorProps) => {
   return (
     <Stack.Navigator
       initialRouteName="Home"
@@ -63,9 +67,10 @@ const AppNavigator = () => {
       />
       <Stack.Screen
         name="Settings"
-        component={SettingsScreen}
         options={{ title: 'Settings' }}
-      />
+      >
+        {(props) => <SettingsScreen {...props} onLogout={onLogout} />}
+      </Stack.Screen>
       <Stack.Screen
         name="Zones"
         component={ZoneListScreen}

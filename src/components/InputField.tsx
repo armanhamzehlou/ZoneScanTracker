@@ -41,9 +41,11 @@ const InputField: React.FC<InputFieldProps> = ({
           colors: {
             primary: colors.accent,
             text: colors.text,
-            placeholder: colors.placeholder,
-            background: colors.cardBackground,
+            placeholder: colors.textSecondary,
+            background: colors.surface,
             outline: colors.textSecondary,
+            onSurface: colors.text,
+            onSurfaceVariant: colors.text,
           },
         }}
         keyboardType={keyboardType}
@@ -72,7 +74,7 @@ const styles = StyleSheet.create({
     color: colors.error,
   },
   input: {
-    backgroundColor: colors.cardBackground,
+    backgroundColor: colors.surface,
   },
   errorText: {
     color: colors.error,

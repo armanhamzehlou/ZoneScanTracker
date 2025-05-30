@@ -36,7 +36,7 @@ export default function App() {
       />
       {isLoggedIn ? (
         <NavigationContainer>
-          <AppNavigator />
+          <AppNavigator onLogout={() => setIsLoggedIn(false)} />
         </NavigationContainer>
       ) : (
         <LoginScreen onLogin={handleLogin} />
