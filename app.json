@@ -1,0 +1,31 @@
+{
+  "expo": {
+    "name": "VirBrix Control",
+    "slug": "virbrix-control",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./generated-icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./generated-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#2C5F7A"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./generated-icon.png",
+        "backgroundColor": "#2C5F7A"
+      }
+    },
+    "web": {
+      "favicon": "./generated-icon.png"
+    },
+    "platforms": ["ios", "android", "web"]
+  }
+}
