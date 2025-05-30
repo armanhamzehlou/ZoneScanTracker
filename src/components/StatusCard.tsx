@@ -8,9 +8,10 @@ import { RobotStatus } from '../types';
 
 interface StatusCardProps {
   status: RobotStatus;
+  emergencyActive?: boolean;
 }
 
-const StatusCard: React.FC<StatusCardProps> = ({ status }) => {
+const StatusCard: React.FC<StatusCardProps> = ({ status, emergencyActive = false }) => {
   return (
     <Card style={styles.card}>
       <LinearGradient
@@ -22,11 +23,23 @@ const StatusCard: React.FC<StatusCardProps> = ({ status }) => {
         <Card.Content style={styles.content}>
         <View style={styles.header}>
           <Text style={styles.title}>Robot Status</Text>
-          <Icon
-            name={status.isConnected ? 'wifi' : 'wifi-off'}
-            size={20}
-            color={status.isConnected ? colors.success : colors.error}
-          />
+          <View style={styles.statusIcons}>
+            <View style={styles.emergencyStatus}>
+              <Icon
+                name={emergencyActive ? "stop-circle" : "check-circle"}
+                size={16}
+                color={emergencyActive ? colors.error : colors.success}
+              />
+              <Text style={[styles.emergencyText, { color: emergencyActive ? colors.error : colors.success }]}>
+                {emergencyActive ? "EMERGENCY" : "OPERATIONAL"}
+              </Text>
+            </View>
+            <Icon
+              name={status.isConnected ? 'wifi' : 'wifi-off'}
+              size={20}
+              color={status.isConnected ? colors.success : colors.error}
+            />
+          </View>
         </View>
         
         <View style={styles.batterySection}>
@@ -84,6 +97,25 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 16,
+  },
+  statusIcons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  emergencyStatus: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.surfaceDark,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+  },
+  emergencyText: {
+    fontSize: 10,
+    fontWeight: '600',
+    marginLeft: 4,
+    letterSpacing: 0.5,
   },
   title: {
     fontSize: 18,

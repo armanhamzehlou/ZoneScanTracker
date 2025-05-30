@@ -16,7 +16,7 @@ interface SettingsScreenProps {
   onLogout?: () => void;
 }
 
-const SettingsScreen = ({ onLogout }: SettingsScreenProps = {}) => {
+const SettingsScreen = ({ onLogout }: SettingsScreenProps) => {
   const navigation = useNavigation<SettingsScreenNavigationProp>();
   const [showSpeedModal, setShowSpeedModal] = useState(false);
   const [showScanDelayModal, setShowScanDelayModal] = useState(false);

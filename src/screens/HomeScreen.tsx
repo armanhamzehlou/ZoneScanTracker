@@ -91,14 +91,13 @@ const HomeScreen = () => {
 
   return (
     <GradientBackground>
-      <EmergencyIndicator isActive={emergencyActive} />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <Text style={styles.title}>GlobalDWS VirBrix Control</Text>
           <Text style={styles.subtitle}>Environmental Scanning & Security</Text>
         </View>
 
-        <StatusCard status={robotStatus} />
+        <StatusCard status={robotStatus} emergencyActive={emergencyActive} />
 
         <View style={styles.controlButtons}>
           <Button
@@ -111,16 +110,6 @@ const HomeScreen = () => {
             disabled={emergencyActive}
           >
             Send Home
-          </Button>
-          <Button
-            mode="contained"
-            icon="stop"
-            buttonColor={emergencyActive ? colors.emergencyActive : colors.error}
-            textColor={colors.text}
-            style={styles.controlButton}
-            onPress={() => emergencyActive ? setEmergencyActive(false) : handleEmergencyStop()}
-          >
-            {emergencyActive ? 'Reset Emergency' : 'Emergency Stop'}
           </Button>
         </View>
 
