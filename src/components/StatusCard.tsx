@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Card, Text, ProgressBar } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import * as Battery from 'expo-battery';
 import { colors } from '../constants/colors';
 import { RobotStatus } from '../types';
 
@@ -12,6 +13,30 @@ interface StatusCardProps {
 }
 
 const StatusCard: React.FC<StatusCardProps> = ({ status, emergencyActive = false }) => {
+  const [deviceBattery, setDeviceBattery] = useState<number | null>(null);
+
+  useEffect(() => {
+    const getBatteryLevel = async () => {
+      try {
+        const batteryLevel = await Battery.getBatteryLevelAsync();
+        setDeviceBattery(Math.round(batteryLevel * 100));
+      } catch (error) {
+        console.log('Battery API not available:', error);
+        setDeviceBattery(null);
+      }
+    };
+
+    getBatteryLevel();
+    
+    // Update battery level every 30 seconds
+    const interval = setInterval(getBatteryLevel, 30000);
+    
+    return () => clearInterval(interval);
+  }, []);
+
+  // Use device battery if available, otherwise fall back to robot status battery
+  const displayBattery = deviceBattery !== null ? deviceBattery : status.battery;
+
   return (
     <Card style={styles.card}>
       <LinearGradient
@@ -45,10 +70,13 @@ const StatusCard: React.FC<StatusCardProps> = ({ status, emergencyActive = false
         <View style={styles.batterySection}>
           <View style={styles.batteryInfo}>
             <Icon name="battery" size={24} color={colors.accent} />
-            <Text style={styles.batteryText}>{status.battery}%</Text>
+            <Text style={styles.batteryText}>{displayBattery}%</Text>
+            {deviceBattery !== null && (
+              <Text style={styles.batterySource}>Device Battery</Text>
+            )}
           </View>
           <ProgressBar
-            progress={status.battery / 100}
+            progress={displayBattery / 100}
             color={colors.accent}
             style={styles.progressBar}
           />
@@ -134,6 +162,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     color: colors.text,
+    marginLeft: 8,
+  },
+  batterySource: {
+    fontSize: 10,
+    color: colors.accent,
+    fontWeight: '500',
     marginLeft: 8,
   },
   progressBar: {
