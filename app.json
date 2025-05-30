@@ -5,11 +5,11 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./generated-icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "dark",
     "splash": {
       "image": "./generated-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#2C5F7A"
+      "backgroundColor": "#0D1117"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -21,11 +21,21 @@
       "adaptiveIcon": {
         "foregroundImage": "./generated-icon.png",
         "backgroundColor": "#2C5F7A"
-      }
+      },
+      "package": "com.hamzehlou.virbrixcontrol"
     },
     "web": {
       "favicon": "./generated-icon.png"
     },
-    "platforms": ["ios", "android", "web"]
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "6727f5b0-621d-4cc8-9ecd-0d4ec6211ff0"
+      }
+    }
   }
 }

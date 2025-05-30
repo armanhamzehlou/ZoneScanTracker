@@ -5,7 +5,7 @@ export const colors = {
   accentLight: '#33DEB8',
   secondary: '#2563EB',
   secondaryLight: '#3B82F6',
-  background: 'linear-gradient(135deg, #1A2332 0%, #2A3441 100%)',
+  background: '#1A2332',
   surface: '#252D3A',
   surfaceLight: '#2F3A47',
   surfaceDark: '#1F242F',
