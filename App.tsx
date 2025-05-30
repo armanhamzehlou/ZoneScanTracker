@@ -35,19 +35,21 @@ export default function App() {
   };
 
   return (
-    <PaperProvider theme={theme}>
-      <StatusBar
-        barStyle="light-content"
-        backgroundColor={colors.primary}
-        translucent={false}
-      />
-      {isLoggedIn ? (
-        <NavigationContainer>
-          <AppNavigator onLogout={handleLogout} />
-        </NavigationContainer>
-      ) : (
-        <LoginScreen onLogin={handleLogin} />
-      )}
-    </PaperProvider>
+    <SafeAreaProvider>
+      <PaperProvider theme={theme}>
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor={colors.primary}
+          translucent={false}
+        />
+        {isLoggedIn ? (
+          <NavigationContainer>
+            <AppNavigator onLogout={handleLogout} />
+          </NavigationContainer>
+        ) : (
+          <LoginScreen onLogin={handleLogin} />
+        )}
+      </PaperProvider>
+    </SafeAreaProvider>
   );
 }
