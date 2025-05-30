@@ -100,7 +100,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
               }
             }}
             textColor={colors.text}
-            left={<TextInput.Icon icon="email" iconColor={colors.accent} />}
+            left={<TextInput.Icon icon="email" />}
           />
 
           <TextInput
@@ -119,7 +119,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
               }
             }}
             textColor={colors.text}
-            left={<TextInput.Icon icon="lock" iconColor={colors.accent} />}
+            left={<TextInput.Icon icon="lock" />}
           />
 
           <Button
