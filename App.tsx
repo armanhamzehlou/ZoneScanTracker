@@ -29,8 +29,6 @@ export default function App() {
   };
 
   const handleLogout = () => {
-    alert('Logout called in App.tsx')
-    console.log('Logout called in App.tsx');
     setIsLoggedIn(false);
   };
 
