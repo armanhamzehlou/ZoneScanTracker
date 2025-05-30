@@ -38,10 +38,7 @@ const SettingsScreen = ({ onLogout }: SettingsScreenProps) => {
   const confirmLogout = () => {
     setShowLogoutModal(false);
     if (onLogout) {
-      console.log('Logout function called');
       onLogout();
-    } else {
-      console.log('No logout function provided');
     }
   };
 
