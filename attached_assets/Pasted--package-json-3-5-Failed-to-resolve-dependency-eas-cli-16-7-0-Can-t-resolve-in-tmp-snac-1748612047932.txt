@@ -1,0 +1,81 @@
+
+package.json (3:5)
+Failed to resolve dependency 'eas-cli@^16.7.0' (Can't resolve '' in '/tmp/snackager/snackager/buildStatus/1/eas-cli@16.7.0-ios,android,web/package')
+Retry
+package.json (4:5)
+Resolving 'typescript@^5.8.3' ...
+(Dependencies)
+package.json (7:5)
+'@expo/metro-runtime@^5.0.4' is not the recommended version for SDK 52.0.0.
+Update to ~4.0.1
+package.json (9:5)
+'expo-linear-gradient@^14.1.4' is not the recommended version for SDK 52.0.0.
+Update to ~14.0.2
+package.json (10:5)
+'react-native-screens@^4.11.1' is not the recommended version for SDK 52.0.0.
+Update to ~4.4.0
+package.json (15:5)
+'react-native-safe-area-context@^5.4.1' is not the recommended version for SDK 52.0.0.
+Update to 4.12.0
+src/components/ConfirmationModal.tsx (4:18)
+'react-native-vector-icons/MaterialCommunityIcons' is not defined in dependencies.
+Add dependency
+src/components/ConfirmationDialog.tsx (4:18)
+'react-native-vector-icons/MaterialCommunityIcons' is not defined in dependencies.
+Add dependency
+src/components/DirectionalControl.tsx (3:18)
+'react-native-vector-icons/MaterialCommunityIcons' is not defined in dependencies.
+Add dependency
+src/components/EmergencyIndicator.tsx (4:18)
+'react-native-vector-icons/MaterialCommunityIcons' is not defined in dependencies.
+Add dependency
+src/components/NavigationDialog.tsx (4:18)
+'react-native-vector-icons/MaterialCommunityIcons' is not defined in dependencies.
+Add dependency
+src/components/StatusCard.tsx (5:18)
+'react-native-vector-icons/MaterialCommunityIcons' is not defined in dependencies.
+Add dependency
+src/components/NavigationStatusModal.tsx (4:18)
+'react-native-vector-icons/MaterialCommunityIcons' is not defined in dependencies.
+Add dependency
+src/components/ZoneCard.tsx (5:18)
+'react-native-vector-icons/MaterialCommunityIcons' is not defined in dependencies.
+Add dependency
+src/screens/HomeScreen.tsx (4:18)
+'react-native-vector-icons/MaterialCommunityIcons' is not defined in dependencies.
+Add dependency
+src/screens/LoginScreen.tsx (4:18)
+'react-native-vector-icons/MaterialCommunityIcons' is not defined in dependencies.
+Add dependency
+src/screens/ReportScreen.tsx (5:18)
+'react-native-vector-icons/MaterialCommunityIcons' is not defined in dependencies.
+Add dependency
+src/screens/MapViewerScreen.tsx (4:18)
+'react-native-vector-icons/MaterialCommunityIcons' is not defined in dependencies.
+Add dependency
+src/screens/ScheduleScreen.tsx (4:18)
+'react-native-vector-icons/MaterialCommunityIcons' is not defined in dependencies.
+Add dependency
+src/screens/SavedMapsScreen.tsx (4:18)
+'react-native-vector-icons/MaterialCommunityIcons' is not defined in dependencies.
+Add dependency
+src/screens/SettingsScreen.tsx (4:18)
+'react-native-vector-icons/MaterialCommunityIcons' is not defined in dependencies.
+Add dependency
+src/components/AnimatedScreenTransition.tsx (31:6)
+React Hook useEffect has missing dependencies: 'fadeAnim' and 'slideAnim'. Either include them or remove the dependency array. (react-hooks/exhaustive-deps)
+(ESLint)
+src/components/ConfirmationModal.tsx (43:6)
+React Hook React.useEffect has a missing dependency: 'scaleValue'. Either include it or remove the dependency array. (react-hooks/exhaustive-deps)
+(ESLint)
+src/components/EmergencyIndicator.tsx (39:6)
+React Hook useEffect has a missing dependency: 'blinkValue'. Either include it or remove the dependency array. (react-hooks/exhaustive-deps)
+(ESLint)
+src/components/NavigationStatusModal.tsx (53:6)
+React Hook useEffect has missing dependencies: 'pulseValue' and 'scaleValue'. Either include them or remove the dependency array. (react-hooks/exhaustive-deps)
+(ESLint)
+src/screens/HomeScreen.tsx (43:6)
+React Hook useEffect has a missing dependency: 'tileAnimations'. Either include it or remove the dependency array. (react-hooks/exhaustive-deps)
+(ESLint)
+src/screens/LoginScreen.tsx (44:6)
+React Hook useEffect has missing dependencies: 'fadeAnim', 'logoScale', and 'slideAnim'. Either include them or remove the dependency array. (react-hooks/exhaustive-deps)
