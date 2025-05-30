@@ -42,14 +42,24 @@ const HomeScreen = () => {
     Animated.stagger(100, animations).start();
   }, []);
 
+  const handleSendHome = () => {
+    if (emergencyActive) return;
+    setShowSendHomeDialog(true);
+  };
+
   const handleSendHomeConfirm = () => {
     setShowSendHomeDialog(false);
     setShowNavigationDialog(true);
   };
 
+  const handleEmergencyStop = () => {
+    setShowEmergencyDialog(true);
+  };
+
   const handleEmergencyConfirm = () => {
     setShowEmergencyDialog(false);
     setEmergencyActive(true);
+    setShowNavigationDialog(false);
   };
 
   const handleStopNavigation = () => {
@@ -96,11 +106,8 @@ const HomeScreen = () => {
             icon="home"
             buttonColor={colors.accent}
             textColor={colors.primary}
-            style={[
-              styles.controlButton,
-              emergencyActive && styles.disabledButton
-            ]}
-            onPress={() => setShowSendHomeDialog(true)}
+            style={styles.controlButton}
+            onPress={handleSendHome}
             disabled={emergencyActive}
           >
             Send Home
@@ -111,7 +118,7 @@ const HomeScreen = () => {
             buttonColor={emergencyActive ? colors.emergencyActive : colors.error}
             textColor={colors.text}
             style={styles.controlButton}
-            onPress={() => emergencyActive ? setEmergencyActive(false) : setShowEmergencyDialog(true)}
+            onPress={() => emergencyActive ? setEmergencyActive(false) : handleEmergencyStop()}
           >
             {emergencyActive ? 'Reset Emergency' : 'Emergency Stop'}
           </Button>
@@ -143,7 +150,7 @@ const HomeScreen = () => {
                 >
                   <Card style={[
                     styles.tileCard,
-                    emergencyActive && styles.disabledTile
+                    emergencyActive && { opacity: 0.5 }
                   ]}>
                     <Card.Content style={styles.tileContent}>
                       <Icon 
@@ -153,7 +160,7 @@ const HomeScreen = () => {
                       />
                       <Text style={[
                         styles.tileTitle,
-                        emergencyActive && styles.disabledText
+                        emergencyActive && { color: colors.disabled }
                       ]}>
                         {tile.title}
                       </Text>
@@ -166,32 +173,31 @@ const HomeScreen = () => {
         </View>
       </ScrollView>
 
-      <ConfirmationDialog
+      <ConfirmationModal
         visible={showSendHomeDialog}
         title="Send Robot Home"
         message="Are you sure you want to send the robot back to the charging station?"
         icon="home"
-        iconColor={colors.accent}
         confirmText="Yes"
         cancelText="No"
         onConfirm={handleSendHomeConfirm}
         onCancel={() => setShowSendHomeDialog(false)}
+        type="info"
       />
 
-      <ConfirmationDialog
+      <ConfirmationModal
         visible={showEmergencyDialog}
         title="Emergency Stop"
         message="This will immediately stop all robot operations. The robot will be unable to perform any tasks until reset."
         icon="alert-octagon"
-        iconColor={colors.error}
         confirmText="Yes"
         cancelText="No"
         onConfirm={handleEmergencyConfirm}
         onCancel={() => setShowEmergencyDialog(false)}
-        danger={true}
+        type="danger"
       />
 
-      <NavigationDialog
+      <NavigationStatusModal
         visible={showNavigationDialog}
         onStop={handleStopNavigation}
       />
