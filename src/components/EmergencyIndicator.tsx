@@ -10,17 +10,9 @@ interface EmergencyIndicatorProps {
 
 const EmergencyIndicator: React.FC<EmergencyIndicatorProps> = ({ isActive }) => {
   const blinkValue = new Animated.Value(1);
-  const slideValue = new Animated.Value(-100);
 
   useEffect(() => {
     if (isActive) {
-      // Slide in animation
-      Animated.timing(slideValue, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-
       // Blinking animation
       const blinkAnimation = Animated.loop(
         Animated.sequence([
@@ -42,47 +34,44 @@ const EmergencyIndicator: React.FC<EmergencyIndicatorProps> = ({ isActive }) => 
         blinkAnimation.stop();
       };
     } else {
-      // Slide out animation
-      Animated.timing(slideValue, {
-        toValue: -100,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
       blinkValue.setValue(1);
     }
   }, [isActive]);
 
-  if (!isActive) return null;
-
   return (
-    <Animated.View 
-      style={[
-        styles.container,
-        { 
-          transform: [{ translateY: slideValue }],
-          opacity: blinkValue 
-        }
-      ]}
-    >
-      <View style={styles.content}>
-        <Icon name="stop-circle" size={20} color={colors.text} />
-        <Text style={styles.text}>EMERGENCY STOP</Text>
-      </View>
-    </Animated.View>
+    <View style={[styles.container, { opacity: isActive ? 1 : 0.3 }]}>
+      <Animated.View 
+        style={[
+          styles.content,
+          { opacity: isActive ? blinkValue : 1 }
+        ]}
+      >
+        <Icon 
+          name={isActive ? "stop-circle" : "check-circle"} 
+          size={16} 
+          color={isActive ? colors.error : colors.success} 
+        />
+        <Text style={[styles.text, { color: isActive ? colors.error : colors.success }]}>
+          {isActive ? "EMERGENCY STOP ACTIVE" : "SYSTEM OPERATIONAL"}
+        </Text>
+      </Animated.View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: colors.emergencyActive,
-    paddingVertical: 8,
-    paddingHorizontal: 20,
+    top: 40,
+    right: 16,
+    backgroundColor: colors.surface,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 20,
     zIndex: 1000,
-    elevation: 10,
+    elevation: 4,
+    borderWidth: 1,
+    borderColor: colors.textSecondary,
   },
   content: {
     flexDirection: 'row',
@@ -90,11 +79,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: colors.text,
-    marginLeft: 8,
-    letterSpacing: 0.5,
+    fontSize: 11,
+    fontWeight: '600',
+    marginLeft: 6,
+    letterSpacing: 0.3,
   },
 });
 

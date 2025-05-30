@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { Card, Text, List, Divider } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
@@ -12,7 +12,11 @@ import { RootStackParamList } from '../navigation/AppNavigator';
 
 type SettingsScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Settings'>;
 
-const SettingsScreen = () => {
+interface SettingsScreenProps {
+  onLogout?: () => void;
+}
+
+const SettingsScreen = ({ onLogout }: SettingsScreenProps = {}) => {
   const navigation = useNavigation<SettingsScreenNavigationProp>();
   const [showSpeedModal, setShowSpeedModal] = useState(false);
   const [showScanDelayModal, setShowScanDelayModal] = useState(false);
@@ -23,6 +27,25 @@ const SettingsScreen = () => {
   const [scanDelay, setScanDelay] = useState('15');
   const [waitTime, setWaitTime] = useState('30');
   const [lockTime, setLockTime] = useState('45');
+
+  const handleLogout = () => {
+    Alert.alert(
+      'Logout',
+      'Are you sure you want to logout?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { 
+          text: 'Logout', 
+          style: 'destructive',
+          onPress: () => {
+            if (onLogout) {
+              onLogout();
+            }
+          }
+        }
+      ]
+    );
+  };
 
   const speedOptions = [
     { label: 'Slow (0.2m / sec)', value: 'Slow' },
@@ -147,7 +170,7 @@ const SettingsScreen = () => {
         </Card>
 
         {/* Logout */}
-        <TouchableOpacity style={styles.logoutContainer}>
+        <TouchableOpacity style={styles.logoutContainer} onPress={handleLogout}>
           <Card style={[styles.card, styles.logoutCard]}>
             <Card.Content style={styles.logoutContent}>
               <Icon name="logout" size={24} color={colors.error} />
